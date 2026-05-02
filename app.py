@@ -55,28 +55,21 @@ if uploaded_file is not None:
 
     st.image(img, caption="Uploaded Image", use_column_width=True)
 
-    features = extract_features(img).reshape(1,-1)
-
-    # Apply same preprocessing
-    features = selector.transform(features)
-    features = scaler.transform(features)
-
     if st.button("Detect Anemia"):
 
-    features = extract_features(img).reshape(1,-1)
+        features = extract_features(img).reshape(1,-1)
 
-    features = selector.transform(features)
-    features = scaler.transform(features)
+        features = selector.transform(features)
+        features = scaler.transform(features)
 
-    #  DEFINE prob FIRST
-    prob = model.predict_proba(features)[0][1]
+        prob = model.predict_proba(features)[0][1]
 
-    st.subheader("Result")
+        st.subheader("Result")
 
-    st.progress(int(prob * 100))
-    st.write(f"Anemia Probability: {prob*100:.2f}%")
+        st.progress(int(prob * 100))
+        st.write(f"Anemia Probability: {prob*100:.2f}%")
 
-    if prob > 0.5:
-        st.error("Anemic")
-    else:
-        st.success("Non-Anemic")
+        if prob > 0.5:
+            st.error("Result: Anemic")
+        else:
+            st.success("Result: Non-Anemic")
